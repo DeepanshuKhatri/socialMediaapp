@@ -2,22 +2,23 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import {getFirestore} from 'firebase/firestore'
+import {getStorage} from 'firebase/storage'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBdek4PS1Mp-5PVRvk9Dc5Stfvq-N6c9uA",
-  authDomain: "social-media-app-1ea44.firebaseapp.com",
-  projectId: "social-media-app-1ea44",
-  storageBucket: "social-media-app-1ea44.appspot.com",
-  messagingSenderId: "847380038752",
-  appId: "1:847380038752:web:50ca88305e9852d4782f05",
-  measurementId: "G-0L1NF4CX42"
+  apiKey: "AIzaSyB4HXIhYkzmsRHXVvakZA_qF5R7Hfuqu6I",
+  authDomain: "newsocialmediaapp-9e5ee.firebaseapp.com",
+  projectId: "newsocialmediaapp-9e5ee",
+  storageBucket: "newsocialmediaapp-9e5ee.appspot.com",
+  messagingSenderId: "961909740103",
+  appId: "1:961909740103:web:2adf2d0bce895c951cd762"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app)
 export const db = getFirestore(app);
+export const storage = getStorage(app);

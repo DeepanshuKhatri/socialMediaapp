@@ -3,14 +3,14 @@ import "../assets/styles/styles.css";
 import { auth, db } from "../config/firebase";
 import { Button, Divider, Form, Input } from "antd";
 import { GoogleOutlined } from "@ant-design/icons";
-import {addUser} from '../redux/slice/user.slice'
+import { addUser } from '../redux/slice/user.slice'
 import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithRedirect,
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import { getFirestore, serverTimestamp, doc, updateDoc, collection,getDocs, addDoc, where, query } from "firebase/firestore";
 
 
 const Login = () => {
@@ -19,19 +19,25 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider).then(async (res) => {
       const res1 = res.user;
-      dispatch(addUser(res1));
-      // const q = query(collection(db, "users"), where("uid", "==", res1.uid));
-      // console.log(q);
-      // const q2 = await getDocs(q);
-      // if (q2.empty) {
-      //   await addDoc(collection(db, "users"), {
-      //     name: res1.displayName,
-      //     email: res1.email,
-      //     uid: res1.uid,
-      //     avatar: res1.photoURL,
-      //     online: true,
-      //   });
-      // }
+      console.log(res);
+      dispatch(addUser({
+        name: res1.displayName,
+        email: res1.email,
+        uid: res1.uid,
+      }));
+      const q = query(collection(db, "users"), where("uid", "==", res1.uid));
+      console.log(q);
+      const q2 = await getDocs(q);
+      if (q2.empty) {
+        await addDoc(collection(db, "users"), {
+      name: res1.displayName,
+      email: res1.email,
+      uid: res1.uid,
+      createdAt: serverTimestamp(),
+          // avatar: res1.photoURL,
+          // online: true,
+        });
+      }
     });
   };
   return (
@@ -51,7 +57,7 @@ const Login = () => {
         <div>
           <Form layout="vertical" className="signup-form">
             <Form.Item>
-            <h1  className="login-text">Welcome Back!</h1>
+              <h1 className="login-text">Welcome Back!</h1>
 
             </Form.Item>
             <Form.Item
@@ -87,13 +93,13 @@ const Login = () => {
             <Form.Item>
               <Divider> or </Divider>
             </Form.Item>
-            <Form.Item htmlType="submit">
+            <Form.Item>
               <Button className="continue-with-google" onClick={signInWithGoogle}>
                 <GoogleOutlined /> Continue With Google
               </Button>
             </Form.Item>
             <Form.Item>
-                <h3 className="already-signup">Don't have account? <a href="/signup">Sign up</a></h3>
+              <h3 className="already-signup">Don't have account? <a href="/signup">Sign up</a></h3>
             </Form.Item>
           </Form>
         </div>
@@ -104,18 +110,18 @@ const Login = () => {
       <footer className="footer-signup">
         <div className="footer-signup1">
 
-        <p>© 2023</p>
-        <p> About </p>
-        <p> Accessibility </p>
-        <p>User Agreement</p>
-        <p>Privacy Policy</p>
-        <p>Cookie Policy</p>
-        <p>Copyright Policy</p>
-        <p>Brand Policy</p>
-        <p>Guest Controls</p>
-        <p>Community Guidelines</p>
-        <p>Language  </p>
-      
+          <p>© 2023</p>
+          <p> About </p>
+          <p> Accessibility </p>
+          <p>User Agreement</p>
+          <p>Privacy Policy</p>
+          <p>Cookie Policy</p>
+          <p>Copyright Policy</p>
+          <p>Brand Policy</p>
+          <p>Guest Controls</p>
+          <p>Community Guidelines</p>
+          <p>Language  </p>
+
         </div>
       </footer>
     </div>

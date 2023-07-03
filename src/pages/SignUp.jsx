@@ -54,7 +54,7 @@ const SignUp = () => {
             <Form.Item>
               <Divider> or </Divider>
             </Form.Item>
-            <Form.Item htmlType="submit">
+            <Form.Item>
               <Button className="continue-with-google">
                 <GoogleOutlined /> Continue With Google
               </Button>

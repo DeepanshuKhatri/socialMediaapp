@@ -16,6 +16,7 @@ export const userSlice = createSlice({
         addUser:(state, action)=>{
             state.users = action.payload
             state.isLoggedIn=true
+            console.log(state.users);
         }
     }
 })
